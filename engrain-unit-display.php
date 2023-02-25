@@ -9,5 +9,7 @@ Version: 1.0
 Author: Matthew Todor
 */
 
-include "includes/functions.php";
+include 'includes/functions.php';
+include 'admin/unit-admin-page.php';
 add_unit_post_type();
+add_action( 'admin_menu', 'unit_admin_page_menus' );
