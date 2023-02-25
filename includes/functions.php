@@ -44,6 +44,7 @@ function add_unit_post_type() {
 			'has_archive' => true,
 			'rewrite' => array( 'slug' => 'unit' ),
 		);
+
 		register_post_type( 'unit', $args );
 	}
 	function custom_fields() {
@@ -61,18 +62,21 @@ function add_unit_post_type() {
 			'single' => true,
 			'show_in_rest' => true,
 		] );
+
 		register_meta( 'unit', 'building_id', [ 
 			'type' => 'string',
 			'description' => 'Custom field for building ID',
 			'single' => true,
 			'show_in_rest' => true,
 		] );
+
 		register_meta( 'unit', 'floor_plan_id', [ 
 			'type' => 'string',
 			'description' => 'Custom field for floor plan ID',
 			'single' => true,
 			'show_in_rest' => true,
 		] );
+
 		register_meta( 'unit', 'area', [ 
 			'type' => 'number',
 			'description' => 'Custom field for area',
