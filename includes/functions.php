@@ -44,9 +44,16 @@ function add_unit_post_type() {
 			'has_archive' => true,
 			'rewrite' => array( 'slug' => 'unit' ),
 		);
-		register_post_type( 'unit_post_type', $args );
+		register_post_type( 'unit', $args );
 	}
 	function custom_fields() {
+
+		register_meta( 'unit', 'floor_id', [ 
+			'type' => 'string',
+			'description' => 'Custom field for floor ID',
+			'single' => true,
+			'show_in_rest' => true,
+		] );
 
 		register_meta( 'unit', 'asset_id', [ 
 			'type' => 'string',
@@ -57,12 +64,6 @@ function add_unit_post_type() {
 		register_meta( 'unit', 'building_id', [ 
 			'type' => 'string',
 			'description' => 'Custom field for building ID',
-			'single' => true,
-			'show_in_rest' => true,
-		] );
-		register_meta( 'unit', 'floor_id', [ 
-			'type' => 'string',
-			'description' => 'Custom field for floor ID',
 			'single' => true,
 			'show_in_rest' => true,
 		] );
@@ -86,12 +87,15 @@ function add_unit_post_type() {
 		return $columns;
 	}
 	function floor_plan_column_content( $column, $post_id ) {
-		if ( $column == 'floor_plan_custom_header' ) {
-			echo get_post_meta( $post_id, 'floor_plan_id' );
+		if ( $column == 'floor_plan_id' ) {
+			echo get_post_meta( $post_id, 'floor_plan_id', true );
 		}
+
 	}
 
 
 	add_action( "init", "unit_post_type" );
+	add_action( 'init', 'custom_fields' );
 	add_filter( 'manage_unit_posts_columns', "floor_plan_column_header", 10, 2 );
+	add_action( 'manage_unit_posts_custom_column', 'floor_plan_column_content', 10, 2 );
 }
