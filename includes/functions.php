@@ -41,6 +41,7 @@ function add_unit_post_type() {
 				'singular_name' => 'unit'
 			)
 			, 'public' => true,
+			'show_in_menu' => 'unit-admin-page',
 			'has_archive' => true,
 			'rewrite' => array( 'slug' => 'unit' ),
 		);
@@ -98,8 +99,5 @@ function add_unit_post_type() {
 	}
 
 
-	add_action( "init", "unit_post_type" );
-	add_action( 'init', 'custom_fields' );
-	add_filter( 'manage_unit_posts_columns', "floor_plan_column_header", 10, 2 );
-	add_action( 'manage_unit_posts_custom_column', 'floor_plan_column_content', 10, 2 );
+
 }
