@@ -286,14 +286,43 @@ function area_edit() {
 area_edit();
 
 
+
+
+
 /* 
 BELOW: function to add button that calls function to get api data and convert it into unit post types
 */
 
-// function add_API_call_button_to_post_table(){
-// 	global $post_type;
-// 	if ( 'unit'===$post_type){
-// 		echo '<div class="alignleft actions"> <a href="' . admin_url( 'functions.php?action=' );
-// 	}
+function add_API_call_button_to_post_table() {
+	global $post_type;
+	if ( 'unit' === $post_type ) {
+		?>
+		<script>
+			jQuery(document).ready(function ($) {
+				$('#api-call').on('click', function () {
 
-// }
+					$.ajax({
+						url: '<?php echo admin_url( 'admin-ajax.php' ); ?>',
+						type: 'post',
+						data: {
+							action: 'call_sightmap_api',
+						},
+						success: function (response) {
+							console.log(response);
+							alert("Posts added from API successfully");
+						},
+						error: function (xhr, status, error) {
+							console.log(xhr.responseTest);
+							alert("Something went wrong");
+						}
+					})
+				})
+			})
+		</script>
+		<?php
+
+		echo '<div class="alignleft actions"> <button id="api-call" class="button">Add Units from API</button></div>';
+	}
+
+}
+add_action( 'restrict_manage_posts', 'add_API_call_button_to_post_table' );
