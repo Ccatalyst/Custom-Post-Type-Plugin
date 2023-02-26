@@ -2,7 +2,7 @@
 
 function call_sightmap_api() {
 	header( 'Access-Control-Allow-Origin:*' );
-	$api_url = 'https://api.sightmap.com/v1/assets/1273/multifamily/units?per-page=10';
+	$api_url = 'https://api.sightmap.com/v1/assets/1273/multifamily/units?per-page=250';
 	$api_key = '7d64ca3869544c469c3e7a586921ba37';
 	$curl = curl_init();
 
