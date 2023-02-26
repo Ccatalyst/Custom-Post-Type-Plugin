@@ -1,7 +1,5 @@
 <?php
 
-
-
 /*
 Plugin Name: Housing Unit Display
 Description: A WordPress plugin that accesses the sightmap API to display location data in a formatted list
