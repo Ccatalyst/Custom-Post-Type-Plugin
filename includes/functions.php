@@ -133,6 +133,7 @@ function add_unit_post_type() {
 			'single' => true,
 			'show_in_rest' => true,
 		] );
+		// unit_number field is not currently being used. Waiting on clarification regarding the project requirements. Currently the unit_number value on a data point coming from the API is being used as the post title value.
 		register_meta( 'unit', 'unit_number', [ 
 			'type' => 'string',
 			'description' => 'Custom field for the unit number',
