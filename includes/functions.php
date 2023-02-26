@@ -2,8 +2,8 @@
 
 function call_sightmap_api() {
 	header( 'Access-Control-Allow-Origin:*' );
-	$api_url = '***REMOVED***';
-	$api_key = '***REMOVED***';
+	$api_url = '<API_url>';
+	$api_key = '<API_key>';
 	$curl = curl_init();
 
 	curl_setopt_array( $curl, [ 
