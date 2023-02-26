@@ -10,15 +10,46 @@ function unit_admin_page_callback() {
 
 // TODO:Move the callbacks to their own files, they're going to get larger with the forms and such. For the edit page of the unit post type, extend the WP_Post class and overwrite what is needed, such as the url to the custom edit page.
 function unit_admin_subpage_callback() {
-	?>
-	<div>
-		<h2>SubPage</h2>
-	</div>
-	<?php
+	$args = array(
+		'post_type' => 'unit',
+		'post_status' => 'publish',
+		'posts_per_page' => -1,
+	);
+	$query = new WP_Query( $args );
+	if ( $query->have_posts() ) :
+		?>
+		<table class="wp-list-table widefat fixed striped">
+			<thead>
+				<tr>
+					<th>ID</th>
+					<th>Title</th>
+					<th>Author</th>
+				</tr>
+			</thead>
+			<tbody>
+				<?php while ( $query->have_posts() ) :
+					$query->the_post(); ?>
+					<tr>
+						<td>
+							<?php the_ID(); ?>
+						</td>
+						<td>
+							<?php the_title(); ?>
+						</td>
+						<td>
+							<?php the_author(); ?>
+						</td>
+					</tr>
+				<?php endwhile; ?>
+			</tbody>
+		</table>
+		<?php
+	endif;
+	wp_reset_postdata();
 }
 function unit_admin_pages() {
 	add_menu_page( 'Engrain Units', 'Units Admin', 'manage_options', 'unit-admin-page', 'unit_admin_page_callback', '', 6 );
 
-	add_submenu_page( 'unit-admin-page', 'Unit edit', 'Unit Edit', 'manage_options', 'unit-admin-subpage', 'unit_admin_subpage_callback' );
-	add_submenu_page( 'edit.php?post_type=unit', 'Unit edit', 'Unit Editing', 'manage_options', 'unit-admin-edit-subpage', 'unit_admin_subpage_callback' );
+	// add_submenu_page( 'unit-admin-page', 'Unit edit', 'Unit Edit', 'manage_options', 'edit.php?post_type=unit', 'unit_admin_subpage_callback' );
+
 }

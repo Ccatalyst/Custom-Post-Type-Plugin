@@ -11,9 +11,9 @@ Author: Matthew Todor
 
 include 'includes/functions.php';
 include 'includes/unit-admin-page.php';
-add_action( 'admin_menu', 'unit_admin_pages' );
-
+// Creating custom post type 'Unit'
 add_action( "init", "add_unit_post_type" );
-add_action( 'init', 'custom_fields' );
-add_filter( 'manage_unit_posts_columns', "floor_plan_column_header", 10, 2 );
-add_action( 'manage_unit_posts_custom_column', 'floor_plan_column_content', 10, 2 );
+
+
+// setting up the admin pages for the unit type
+add_action( 'admin_menu', 'unit_admin_pages' );
