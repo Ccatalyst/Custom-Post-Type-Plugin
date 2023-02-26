@@ -7,11 +7,15 @@
 
 /*
 BELOW: functions to add custom edit boxes for created fields on unit post type
+// 
+// 
+Okay, this was a trip. shout out to Mo Ismailzai on the Mugo Web Blog for his article on complex fields to custom post types https://www.mugo.ca/Blog/Adding-complex-fields-to-WordPress-custom-post-types
 */
+
 function floor_id_edit() {
 
 
-	// Okay, this was a trip. shout out to Mo Ismailzai on the Mugo Web Blog for his article on complex fields to custom post types https://www.mugo.ca/Blog/Adding-complex-fields-to-WordPress-custom-post-types
+	//
 
 	// add_floor_id_meta_box creates the box to edit the floor_id in the edit page for the post. The callback in the third argument is below
 	function add_floor_id_meta_box() {

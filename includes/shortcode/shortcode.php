@@ -1,21 +1,18 @@
 <?php
 
 
-// Query all unit posts, and run a while loop over it. Each output will be a <li> with the various datapoints of the unit post in it. It should be ordered by area, so the return can be split into two categories (>1, ==1).
+// Query all unit posts, and run a while loop over it to sort it into an array based on area size. Create a table for each array, and loop over them. Each output will be a table row with the various datapoints of the unit post in it. 
 
 function units_split_list() {
+	// initially the thought would be to order the posts by the area, but if you wanted the most recent posts, that wouldn't work. It also meant that if you limited the number of posts per page, it would only return one of the area sizes, larger than 1 by default. So for now it's the default.
 	$args = array(
 		'post_type' => 'unit',
 		'posts_per_page' => -1,
-		// 'orderby' => 'meta_value_num',
-		// 'meta_key' => 'area',
-		// 'order' => 'DESC',
-
 	);
 
 	// query using new WP_Query($args =>array)
 	$query = new WP_Query( $args );
-	//if $query has posts, start a <ul>, then loop over the posts, outputting a <li> for each one. Start with just the title, I guess?
+	// if the post type has posts, create two arrays and sort the posts into an array if they have an area of 1, or larger than 1.
 	if ( $query->have_posts() ) {
 
 		$large_area_units = array();
@@ -58,6 +55,7 @@ function units_split_list() {
 		$output .= '<th><strong> Floor Plan ID </strong></th>';
 		$output .= '<th><strong> Area </strong></th>';
 		$output .= '</tr>';
+		// rows for the unit posts that have an area larger than 1.
 		foreach ( $large_area_units as $unit ) {
 			$unit_number = $unit->post_title;
 			$asset_id = get_post_meta( $unit->ID, 'asset_id', true );
@@ -89,6 +87,7 @@ function units_split_list() {
 		$output .= '<th><strong>Floor Plan ID</strong></th>';
 		$output .= '<th><strong>Area</strong></th>';
 		$output .= '</tr>';
+		// rows for the unit posts that have an area of 1
 		foreach ( $one_area_units as $unit ) {
 			$unit_number = $unit->post_title;
 			$asset_id = get_post_meta( $unit->ID, 'asset_id', true );
@@ -107,7 +106,7 @@ function units_split_list() {
 			$output .= '<td>' . $area . '</td>';
 			$output .= '</tr>';
 		}
-		// When there aren't any more posts, close with </ul>
+		// When there aren't any more posts, close table
 		$output .= '</table>';
 		// The whole output should be a variable that can be returned
 		return $output;
