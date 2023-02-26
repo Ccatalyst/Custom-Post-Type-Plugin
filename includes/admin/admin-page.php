@@ -324,10 +324,7 @@ function add_API_call_button_to_post_table() {
 						}
 					})
 				})
-				// const addNewButton = $('a.page-title-action');
-				// if (addNewButton.length) {
-				// 	$('#api-call').insertAfter(addNewButton)
-				// }
+
 			})
 		</script>
 		<?php

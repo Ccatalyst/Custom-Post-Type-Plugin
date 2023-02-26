@@ -7,6 +7,7 @@ function units_split_list() {
 	// initially the thought would be to order the posts by the area, but if you wanted the most recent posts, that wouldn't work. It also meant that if you limited the number of posts per page, it would only return one of the area sizes, larger than 1 by default. So for now it's the default.
 	$args = array(
 		'post_type' => 'unit',
+		// CHANGE THIS NUMBER TO CONTROL NUMBER OF UNIT POSTS SHOWN IN TABLES. -1 GETS ALL POSTS.
 		'posts_per_page' => -1,
 	);
 
