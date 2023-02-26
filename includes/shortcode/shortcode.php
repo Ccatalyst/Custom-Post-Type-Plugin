@@ -32,15 +32,41 @@ function units_split_list() {
 			}
 		}
 
-		$output = '<strong style="text-align: center">Units with area larger than 1</strong>';
+		$output = '<style>
+        
+        table, th, td {
+            border: 1px solid black;
+            border-collapse:collapse;
+             
+        }
+        table {
+            width: 50%;
+            display: inline-table;
+           
+        }
+       th,td {
+        padding: 5px;
+       }
+        td {
+            border: 1px solid black;
+            
+            text-align: right;
+        }
+        tbody {
+            margin: 5px;
+        }
+        </style>';
+
+
 		$output .= '<table>';
+		$output .= '<caption><strong>Units with area larger than 1</strong></caption>';
 		$output .= '<tr>';
-		$output .= '<th>Unit Number</th>';
-		$output .= '<th>Asset ID</th>';
-		$output .= '<th>Building ID</th>';
-		$output .= '<th>Floor ID</th>';
-		$output .= '<th>Floor Plan ID</th>';
-		$output .= '<th>Area</th>';
+		$output .= '<th><strong>Unit Number</strong></th>';
+		$output .= '<th><strong> Asset ID </strong></th>';
+		$output .= '<th><strong> Building ID </strong></th>';
+		$output .= '<th><strong> Floor ID </strong></th>';
+		$output .= '<th><strong> Floor Plan ID </strong></th>';
+		$output .= '<th><strong> Area </strong></th>';
 		$output .= '</tr>';
 		foreach ( $large_area_units as $unit ) {
 			$unit_number = $unit->post_title;
@@ -52,7 +78,7 @@ function units_split_list() {
 
 
 			$output .= '<tr>';
-			$output .= '<td>' . $unit_number . '</td>';
+			$output .= '<td >' . $unit_number . '</td>';
 			$output .= '<td>' . $asset_id . '</td>';
 			$output .= '<td>' . $building_id . '</td>';
 			$output .= '<td>' . $floor_id . '</td>';
@@ -63,15 +89,15 @@ function units_split_list() {
 		}
 
 
-		$output .= '<strong>Units with area equal to 1</strong>';
 		$output .= '<table>';
+		$output .= '<caption><strong>Units with area equal to 1</strong></caption>';
 		$output .= '<tr>';
-		$output .= '<th>Unit Number</th>';
-		$output .= '<th>Asset ID</th>';
-		$output .= '<th>Building ID</th>';
-		$output .= '<th>Floor ID</th>';
-		$output .= '<th>Floor Plan ID</th>';
-		$output .= '<th>Area</th>';
+		$output .= '<th><strong>Unit Number</strong></th>';
+		$output .= '<th><strong>Asset ID</strong></th>';
+		$output .= '<th><strong>Building ID</strong></th>';
+		$output .= '<th><strong>Floor ID</strong></th>';
+		$output .= '<th><strong>Floor Plan ID</strong></th>';
+		$output .= '<th><strong>Area</strong></th>';
 		$output .= '</tr>';
 		foreach ( $one_area_units as $unit ) {
 			$unit_number = $unit->post_title;
@@ -98,5 +124,3 @@ function units_split_list() {
 	}
 
 }
-
-// If it's anything like the rest of wordpress, I'll bet there's an action I need to add.
