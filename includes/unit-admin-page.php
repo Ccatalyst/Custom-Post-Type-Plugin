@@ -2,13 +2,12 @@
 // TODO: create a button that will run the api query function. When the data is returned, it needs to be looped over and the data turned into unit posts via wp_insert_post WP function https://developer.wordpress.org/reference/functions/wp_insert_post/  
 
 
-// TODO: Add inputs for all custom fields on unit edit page via add_meta_box
 
 
-function unit_admin_pages() {
-	add_menu_page( 'Engrain Units', 'Units', 'manage_options', 'unit-admin-page', 'unit_admin_page_callback', '', 6 );
-}
 
+/*
+BELOW: functions to add custom edit boxes for created fields on unit post type
+*/
 function floor_id_edit() {
 
 
@@ -120,8 +119,6 @@ function floor_plan_id_edit() {
 	add_action( 'save_post_unit', 'save_floor_plan_id_meta_box' );
 }
 floor_plan_id_edit();
-
-
 function asset_id_edit() {
 
 
@@ -177,8 +174,6 @@ function asset_id_edit() {
 	add_action( 'save_post_unit', 'save_asset_id_meta_box' );
 }
 asset_id_edit();
-
-
 function building_id_edit() {
 
 
@@ -234,8 +229,6 @@ function building_id_edit() {
 	add_action( 'save_post_unit', 'save_building_id_meta_box' );
 }
 building_id_edit();
-
-
 function area_edit() {
 
 

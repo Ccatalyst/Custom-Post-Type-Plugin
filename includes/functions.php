@@ -37,11 +37,11 @@ function add_unit_post_type() {
 
 		$args = array(
 			'labels' => array(
-				'name' => 'unit',
-				'singular_name' => 'unit'
+				'name' => 'Units',
+				'singular_name' => 'Unit'
 			)
 			, 'public' => true,
-			'show_in_menu' => 'unit-admin-page',
+			'show_in_menu' => 'edit.php',
 			'has_archive' => true,
 			'rewrite' => array( 'slug' => 'unit' ),
 		);
