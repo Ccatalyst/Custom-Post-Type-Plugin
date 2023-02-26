@@ -104,5 +104,4 @@ function add_unit_post_type() {
 	add_filter( 'manage_unit_posts_columns', 'floor_plan_column_header', 10 );
 	add_action( 'manage_unit_posts_custom_column', 'floor_plan_column_content', 10, 2 );
 
-
 }
