@@ -1,8 +1,8 @@
 <?php
 
 function call_sightmap_api() {
-
-	$api_url = '***REMOVED***';
+	header( 'Access-Control-Allow-Origin:*' );
+	$api_url = 'https://api.sightmap.com/v1/assets/1273/multifamily/units?per-page=10';
 	$api_key = '***REMOVED***';
 	$curl = curl_init();
 
@@ -25,9 +25,48 @@ function call_sightmap_api() {
 
 		echo 'cURL Error #:' . $err;
 	} else {
-		echo $response;
+		$data = json_decode( $response, true );
+		$array = $data['data'];
+
+
+		foreach ( $array as $value ) {
+			$unit_number = $value['unit_number'];
+			$asset_id = $value['asset_id'];
+			$building_id = $value['building_id'];
+			$floor_id = $value['floor_id'];
+			$floor_plan_id = $value['floor_plan_id'];
+			$area = $value['area'];
+
+
+			$args = array(
+				'post_title' => $unit_number,
+				'post_status' => 'publish',
+				'post_type' => 'unit',
+				'meta_input' => array(
+					'asset_id' => $asset_id,
+					'building_id' => $building_id,
+					'floor_id' => $floor_id,
+					'floor_plan_id' => $floor_plan_id,
+					'area' => $area, ) );
+
+
+
+
+			$post = wp_insert_post( $args, true );
+
+			if ( $post ) {
+
+			} else {
+				echo "Post failure";
+			}
+		}
+
 	}
+	wp_die();
 }
+add_action( 'wp_ajax_call_sightmap_api', 'call_sightmap_api' );
+add_action( 'wp_ajax_nopriv_call_sightmap_api', 'call_sightmap_api' );
+
 
 
 
