@@ -32,31 +32,21 @@ function units_split_list() {
 			}
 		}
 
-		$output = '<style>
-        
+		$output = '<style >
         table, th, td {
             border: 1px solid black;
             border-collapse:collapse;
-             
         }
-        table {
-            width: 50%;
-            display: inline-table;
-           
+        tr:nth-child(odd) { 
+            background-color: #DEE3E1;
         }
-       th,td {
+        th,td {
         padding: 5px;
-       }
-        td {
-            border: 1px solid black;
-            
-            text-align: right;
         }
-        tbody {
-            margin: 5px;
+        td {
+        text-align: right;
         }
         </style>';
-
 
 		$output .= '<table>';
 		$output .= '<caption><strong>Units with area larger than 1</strong></caption>';

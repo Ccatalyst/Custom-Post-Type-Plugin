@@ -162,7 +162,7 @@ function add_unit_post_type() {
 	function reorder_table_columns( $columns ) {
 		unset( $columns['date'] );
 		$columns['title'] = 'Unit Number';
-		$columns['floor_plan_id'] = 'Floor Plan Id';
+		$columns['floor_plan_id'] = 'Floor Plan ID';
 		$columns['date'] = 'Date';
 
 		return $columns;
