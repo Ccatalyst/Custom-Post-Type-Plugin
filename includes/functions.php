@@ -71,10 +71,11 @@ add_action( 'wp_ajax_nopriv_call_sightmap_api', 'call_sightmap_api' );
 
 
 function add_unit_post_type() {
-
+	// I formatted the function in this way to ensure that all of the customization that needed to happen for the custom post type happened together, and then the add_unit_post_type function is added as an init action in the main plugin file
 	function unit_post_type() {
 
 		$args = array(
+			// a few labels to make it consistent. Not all have been changed, TODO:
 			'labels' => array(
 				'name' => 'Units',
 				'singular_name' => 'Unit',
@@ -85,8 +86,8 @@ function add_unit_post_type() {
 				'search_items' => 'Search Units',
 				'menu_name' => 'Units',
 
-			)
-			, 'public' => true,
+			),
+			'public' => true,
 			'show_in_menu' => 'edit.php',
 			'has_archive' => true,
 			'rewrite' => array( 'slug' => 'unit' ),
