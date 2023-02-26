@@ -284,3 +284,16 @@ function area_edit() {
 	add_action( 'save_post_unit', 'save_area_meta_box' );
 }
 area_edit();
+
+
+/* 
+BELOW: function to add button that calls function to get api data and convert it into unit post types
+*/
+
+// function add_API_call_button_to_post_table(){
+// 	global $post_type;
+// 	if ( 'unit'===$post_type){
+// 		echo '<div class="alignleft actions"> <a href="' . admin_url( 'functions.php?action=' );
+// 	}
+
+// }
