@@ -98,38 +98,11 @@ function add_unit_post_type() {
 		if ( $column == 'floor_plan_id' ) {
 			echo get_post_meta( $post_id, 'floor_plan_id', true );
 		}
-
 	}
+
 	// Add the custom column to the post type
 	add_filter( 'manage_unit_posts_columns', 'floor_plan_column_header', 10 );
 	add_action( 'manage_unit_posts_custom_column', 'floor_plan_column_content', 10, 2 );
-
-
-}
-
-function test_unit_post() {
-	$post_data = array(
-		'post_type' => 'unit',
-		'post_title' => '01100',
-		'post_content' => 'test post',
-		'post_status' => 'publish',
-		'meta_input' => array(
-			'floor_id' => '4358',
-			'asset_id' => '1273',
-			'building_id' => '7783',
-			'floor_plan_id' => '4358',
-			'area' => 879,
-
-		)
-	);
-	$post_id = wp_insert_post( $post_data, true );
-
-
-	if ( $post_id ) {
-		echo "Successfully added post";
-	} else {
-		echo "Something has gone wrong";
-	}
 
 
 }
