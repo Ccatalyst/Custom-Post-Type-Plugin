@@ -22,7 +22,9 @@ A WordPress plugin designed to be used with Engrain's API for property assets, s
 
 ## Usage
 
-For use by Engrain and associates
+The custom post type can be found under the Post top-level menu item. To create units from the API, there is a button in the table navigation that says "Add Units from API". It will reach out the the API and create as many new posts as the API returns (currently 250). Each can be edited like a standard post, with the custom fields available to edit on the edit page.
+
+To display a table of the unit posts currently available on your site, the shortcode [unit-split-list] can be used. This will query all unit posts and organize them into two tables: One where the area field of the post is larger than 1, and the other where the area field is equal to 1. A note: if you use the button on the Unit post admin table list page to add unit posts, the tables will be large. You can modify the number of posts that are collected in the shortcode.php file of the plugin.
 
 ## Questions
 
