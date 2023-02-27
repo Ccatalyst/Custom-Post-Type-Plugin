@@ -1,28 +1,48 @@
 <?php
-
-
-// Query all unit posts, and run a while loop over it to sort it into an array based on area size. Create a table for each array, and loop over them. Each output will be a table row with the various datapoints of the unit post in it. 
-
-//TODO: build table creation function to refactor table creation
-
-
 function build_unit_table( $array, $title ) {
+	$output = '';
+	$output .= '<table>';
+	$output .= '<caption><strong>' . $title . '</strong></caption>';
+	$output .= '<tr>';
+	$output .= '<th><strong>Unit Number</strong></th>';
+	$output .= '<th><strong> Asset ID </strong></th>';
+	$output .= '<th><strong> Building ID </strong></th>';
+	$output .= '<th><strong> Floor ID </strong></th>';
+	$output .= '<th><strong> Floor Plan ID </strong></th>';
+	$output .= '<th><strong> Area </strong></th>';
+	$output .= '<th><strong> Link </strong></th>';
+	$output .= '</tr>';
+	foreach ( $array as $unit ) {
+		$unit_number = $unit->post_title;
+		$asset_id = get_post_meta( $unit->ID, 'asset_id', true );
+		$building_id = get_post_meta( $unit->ID, 'building_id', true );
+		$floor_id = get_post_meta( $unit->ID, 'floor_id', true );
+		$floor_plan_id = get_post_meta( $unit->ID, 'floor_plan_id', true );
+		$area = get_post_meta( $unit->ID, 'area', true );
+		$link = get_post_permalink( $unit->ID );
 
-
+		$output .= '<tr>';
+		$output .= '<td >' . $unit_number . '</td>';
+		$output .= '<td>' . $asset_id . '</td>';
+		$output .= '<td>' . $building_id . '</td>';
+		$output .= '<td>' . $floor_id . '</td>';
+		$output .= '<td>' . $floor_plan_id . '</td>';
+		$output .= '<td>' . $area . '</td>';
+		$output .= '<td><a href="' . $link . '">Link</a></td>';
+		$output .= '</tr>';
+	}
+	$output .= '</table>';
+	return $output;
 }
 function units_split_list() {
-	// initially the thought would be to order the posts by the area, but if you wanted the most recent posts, that wouldn't work. It also meant that if you limited the number of posts per page, it would only return one of the area sizes, larger than 1 by default. So for now it's the default.
 	$args = array(
 		'post_type' => 'unit',
 		// CHANGE THIS NUMBER TO CONTROL NUMBER OF UNIT POSTS SHOWN IN TABLES. -1 GETS ALL POSTS.
 		'posts_per_page' => -1,
 	);
 
-	// query using new WP_Query($args =>array)
 	$query = new WP_Query( $args );
-	// if the post type has posts, create two arrays and sort the posts into an array if they have an area of 1, or larger than 1.
 	if ( $query->have_posts() ) {
-
 		$large_area_units = array();
 		$one_area_units = array();
 
@@ -52,68 +72,8 @@ function units_split_list() {
         text-align: right;
         }
         </style>';
-
-		$output .= '<table>';
-		$output .= '<caption><strong>Units with area larger than 1</strong></caption>';
-		$output .= '<tr>';
-		$output .= '<th><strong>Unit Number</strong></th>';
-		$output .= '<th><strong> Asset ID </strong></th>';
-		$output .= '<th><strong> Building ID </strong></th>';
-		$output .= '<th><strong> Floor ID </strong></th>';
-		$output .= '<th><strong> Floor Plan ID </strong></th>';
-		$output .= '<th><strong> Area </strong></th>';
-		$output .= '</tr>';
-		// rows for the unit posts that have an area larger than 1.
-		foreach ( $large_area_units as $unit ) {
-			$unit_number = $unit->post_title;
-			$asset_id = get_post_meta( $unit->ID, 'asset_id', true );
-			$building_id = get_post_meta( $unit->ID, 'building_id', true );
-			$floor_id = get_post_meta( $unit->ID, 'floor_id', true );
-			$floor_plan_id = get_post_meta( $unit->ID, 'floor_plan_id', true );
-			$area = get_post_meta( $unit->ID, 'area', true );
-			$output .= '<tr>';
-			$output .= '<td >' . $unit_number . '</td>';
-			$output .= '<td>' . $asset_id . '</td>';
-			$output .= '<td>' . $building_id . '</td>';
-			$output .= '<td>' . $floor_id . '</td>';
-			$output .= '<td>' . $floor_plan_id . '</td>';
-			$output .= '<td>' . $area . '</td>';
-			$output .= '</tr>';
-		}
-		$output .= '</table>';
-
-		$output .= '<table>';
-
-		$output .= '<caption><strong>Units with area equal to 1</strong></caption>';
-		$output .= '<tr>';
-		$output .= '<th><strong>Unit Number</strong></th>';
-		$output .= '<th><strong>Asset ID</strong></th>';
-		$output .= '<th><strong>Building ID</strong></th>';
-		$output .= '<th><strong>Floor ID</strong></th>';
-		$output .= '<th><strong>Floor Plan ID</strong></th>';
-		$output .= '<th><strong>Area</strong></th>';
-		$output .= '</tr>';
-		// rows for the unit posts that have an area of 1
-		foreach ( $one_area_units as $unit ) {
-			$unit_number = $unit->post_title;
-			$asset_id = get_post_meta( $unit->ID, 'asset_id', true );
-			$building_id = get_post_meta( $unit->ID, 'building_id', true );
-			$floor_id = get_post_meta( $unit->ID, 'floor_id', true );
-			$floor_plan_id = get_post_meta( $unit->ID, 'floor_plan_id', true );
-			$area = get_post_meta( $unit->ID, 'area', true );
-
-			$output .= '<tr>';
-			$output .= '<td>' . $unit_number . '</td>';
-			$output .= '<td>' . $asset_id . '</td>';
-			$output .= '<td>' . $building_id . '</td>';
-			$output .= '<td>' . $floor_id . '</td>';
-			$output .= '<td>' . $floor_plan_id . '</td>';
-			$output .= '<td>' . $area . '</td>';
-			$output .= '</tr>';
-		}
-		// When there aren't any more posts, close table
-		$output .= '</table>';
-		// The whole output should be a variable that can be returned
+		$output .= build_unit_table( $large_area_units, 'Units with area larger than 1' );
+		$output .= build_unit_table( $one_area_units, 'Units with area equal to 1' );
 		return $output;
 	}
 

@@ -51,11 +51,6 @@ function call_sightmap_api() {
 	}
 	wp_die();
 }
-add_action( 'wp_ajax_call_sightmap_api', 'call_sightmap_api' );
-add_action( 'wp_ajax_nopriv_call_sightmap_api', 'call_sightmap_api' );
-
-
-
 function unit_post_type() {
 
 	$args = array(
@@ -109,7 +104,6 @@ function add_custom_column_content( $field_name, $column, $post_id ) {
 function add_unit_post_type() {
 	unit_post_type();
 	add_unit_custom_fields();
-
 	// functions add custom column to hold floor_plan_id field
 	function floor_plan_column_header( $columns ) {
 		add_custom_column_header( 'floor_plan_id', 'Floor Plan Id', $columns );
@@ -132,8 +126,6 @@ function add_unit_post_type() {
 		return $columns;
 	}
 
-
-	// Add the custom column to the post type
 	add_filter( 'manage_unit_posts_columns', 'floor_plan_column_header', 10 );
 	add_action( 'manage_unit_posts_custom_column', 'floor_plan_column_content', 10, 2 );
 	add_filter( 'manage_unit_posts_columns', 'title_column_name_change' );
