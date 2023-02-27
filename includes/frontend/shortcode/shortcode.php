@@ -3,6 +3,13 @@
 
 // Query all unit posts, and run a while loop over it to sort it into an array based on area size. Create a table for each array, and loop over them. Each output will be a table row with the various datapoints of the unit post in it. 
 
+//TODO: build table creation function to refactor table creation
+
+
+function build_unit_table( $array, $title ) {
+
+
+}
 function units_split_list() {
 	// initially the thought would be to order the posts by the area, but if you wanted the most recent posts, that wouldn't work. It also meant that if you limited the number of posts per page, it would only return one of the area sizes, larger than 1 by default. So for now it's the default.
 	$args = array(
@@ -64,8 +71,6 @@ function units_split_list() {
 			$floor_id = get_post_meta( $unit->ID, 'floor_id', true );
 			$floor_plan_id = get_post_meta( $unit->ID, 'floor_plan_id', true );
 			$area = get_post_meta( $unit->ID, 'area', true );
-
-
 			$output .= '<tr>';
 			$output .= '<td >' . $unit_number . '</td>';
 			$output .= '<td>' . $asset_id . '</td>';
@@ -74,11 +79,11 @@ function units_split_list() {
 			$output .= '<td>' . $floor_plan_id . '</td>';
 			$output .= '<td>' . $area . '</td>';
 			$output .= '</tr>';
-
 		}
-
+		$output .= '</table>';
 
 		$output .= '<table>';
+
 		$output .= '<caption><strong>Units with area equal to 1</strong></caption>';
 		$output .= '<tr>';
 		$output .= '<th><strong>Unit Number</strong></th>';
@@ -96,7 +101,6 @@ function units_split_list() {
 			$floor_id = get_post_meta( $unit->ID, 'floor_id', true );
 			$floor_plan_id = get_post_meta( $unit->ID, 'floor_plan_id', true );
 			$area = get_post_meta( $unit->ID, 'area', true );
-
 
 			$output .= '<tr>';
 			$output .= '<td>' . $unit_number . '</td>';

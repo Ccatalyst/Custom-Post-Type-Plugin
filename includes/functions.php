@@ -2,8 +2,8 @@
 
 function call_sightmap_api() {
 	header( 'Access-Control-Allow-Origin:*' );
-	$api_url = '<API_url>';
-	$api_key = '<API_key>';
+	$api_url = '<API url>';
+	$api_key = '<API key>';
 	$curl = curl_init();
 
 	curl_setopt_array( $curl, [ 
@@ -13,7 +13,6 @@ function call_sightmap_api() {
 		CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
 		CURLOPT_CUSTOMREQUEST => "GET",
 		CURLOPT_HTTPHEADER => [ 
-
 			"API-Key: " . $api_key
 		],
 	] );
@@ -22,12 +21,10 @@ function call_sightmap_api() {
 	$err = curl_error( $curl );
 	curl_close( $curl );
 	if ( $err ) {
-
 		echo 'cURL Error #:' . $err;
 	} else {
 		$data = json_decode( $response, true );
 		$array = $data['data'];
-
 
 		foreach ( $array as $value ) {
 			$unit_number = $value['unit_number'];
@@ -36,8 +33,6 @@ function call_sightmap_api() {
 			$floor_id = $value['floor_id'];
 			$floor_plan_id = $value['floor_plan_id'];
 			$area = $value['area'];
-
-
 			$args = array(
 				'post_title' => $unit_number,
 				'post_status' => 'publish',
@@ -48,19 +43,11 @@ function call_sightmap_api() {
 					'floor_id' => $floor_id,
 					'floor_plan_id' => $floor_plan_id,
 					'area' => $area, ) );
-
-
-
-
 			$post = wp_insert_post( $args, true );
-
-			if ( $post ) {
-
-			} else {
+			if ( ! $post ) {
 				echo "Post failure";
 			}
 		}
-
 	}
 	wp_die();
 }
@@ -69,90 +56,66 @@ add_action( 'wp_ajax_nopriv_call_sightmap_api', 'call_sightmap_api' );
 
 
 
+function unit_post_type() {
 
+	$args = array(
+		// a few labels to make it consistent. Not all have been changed, TODO:
+		'labels' => array(
+			'name' => 'Units',
+			'singular_name' => 'Unit',
+			'add_new' => 'Add New Unit',
+			'add_new_item' => 'Add New Unit',
+			'edit_item' => 'Edit Unit',
+			'view_item' => 'View Unit',
+			'search_items' => 'Search Units',
+			'menu_name' => 'Units',
+
+		),
+		'public' => true,
+		'show_in_menu' => 'edit.php',
+		'has_archive' => true,
+		'rewrite' => array( 'slug' => 'unit' ),
+		'title' => 'Unit Number'
+	);
+
+	register_post_type( 'unit', $args );
+}
+function register_custom_field( $field_name, $field_display_name ) {
+	register_meta( 'unit', $field_name, [ 
+		'type' => 'string',
+		'description' => 'Custom field for the ' . $field_display_name,
+		'single' => true,
+		'show_in_rest' => true,
+	] );
+}
+function add_unit_custom_fields() {
+	register_custom_field( 'floor_id', 'floor ID' );
+	register_custom_field( 'asset_id', 'asset ID' );
+	register_custom_field( 'building_id', 'building ID' );
+	register_custom_field( 'floor_plan_id', 'floor plan ID' );
+	register_custom_field( 'area', 'area' );
+	// unit_number field is not currently being used. Waiting on clarification regarding the project requirements. Currently the unit_number value on a data point coming from the API is being used as the post title value.
+	register_custom_field( 'unit_number', 'unit number' );
+}
+function add_custom_column_header( $field_name, $field_display_name, $columns ) {
+	$columns[ $field_name ] = $field_display_name;
+	return $columns;
+}
+function add_custom_column_content( $field_name, $column, $post_id ) {
+	if ( $column == $field_name ) {
+		echo get_post_meta( $post_id, $field_name, true );
+	}
+}
 function add_unit_post_type() {
-	// I formatted the function in this way to ensure that all of the customization that needed to happen for the custom post type happened together, and then the add_unit_post_type function is added as an init action in the main plugin file
-	function unit_post_type() {
-
-		$args = array(
-			// a few labels to make it consistent. Not all have been changed, TODO:
-			'labels' => array(
-				'name' => 'Units',
-				'singular_name' => 'Unit',
-				'add_new' => 'Add New Unit',
-				'add_new_item' => 'Add New Unit',
-				'edit_item' => 'Edit Unit',
-				'view_item' => 'View Unit',
-				'search_items' => 'Search Units',
-				'menu_name' => 'Units',
-
-			),
-			'public' => true,
-			'show_in_menu' => 'edit.php',
-			'has_archive' => true,
-			'rewrite' => array( 'slug' => 'unit' ),
-			'title' => 'Unit Number'
-		);
-
-		register_post_type( 'unit', $args );
-	}
 	unit_post_type();
-
-	function custom_fields() {
-
-		register_meta( 'unit', 'floor_id', [ 
-			'type' => 'string',
-			'description' => 'Custom field for the floor ID',
-			'single' => true,
-			'show_in_rest' => true,
-		] );
-
-		register_meta( 'unit', 'asset_id', [ 
-			'type' => 'string',
-			'description' => 'Custom field for the asset ID',
-			'single' => true,
-			'show_in_rest' => true,
-		] );
-
-		register_meta( 'unit', 'building_id', [ 
-			'type' => 'string',
-			'description' => 'Custom field for the building ID',
-			'single' => true,
-			'show_in_rest' => true,
-		] );
-
-		register_meta( 'unit', 'floor_plan_id', [ 
-			'type' => 'string',
-			'description' => 'Custom field for the floor plan ID',
-			'single' => true,
-			'show_in_rest' => true,
-		] );
-
-		register_meta( 'unit', 'area', [ 
-			'type' => 'number',
-			'description' => 'Custom field for area',
-			'single' => true,
-			'show_in_rest' => true,
-		] );
-		// unit_number field is not currently being used. Waiting on clarification regarding the project requirements. Currently the unit_number value on a data point coming from the API is being used as the post title value.
-		register_meta( 'unit', 'unit_number', [ 
-			'type' => 'string',
-			'description' => 'Custom field for the unit number',
-			'single' => true,
-			'show_in_rest' => true,
-		] );
-	}
-	custom_fields();
+	add_unit_custom_fields();
 
 	// functions add custom column to hold floor_plan_id field
 	function floor_plan_column_header( $columns ) {
-		$columns['floor_plan_id'] = "Floor Plan ID";
-		return $columns;
+		add_custom_column_header( 'floor_plan_id', 'Floor Plan Id', $columns );
 	}
 	function floor_plan_column_content( $column, $post_id ) {
-		if ( $column == 'floor_plan_id' ) {
-			echo get_post_meta( $post_id, 'floor_plan_id', true );
-		}
+		add_custom_column_content( 'floor_plan_id', $column, $post_id );
 	}
 	// Changes the name of the title column to 'Unit Number'
 	function title_column_name_change( $columns ) {

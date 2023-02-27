@@ -18,7 +18,7 @@ WISHLIST: to be addressed once assessment requirements are met
 
 include 'includes/functions.php';
 include 'includes/admin/admin-page.php';
-include 'includes//frontend/shortcode/shortcode.php';
+include 'includes/frontend/shortcode/shortcode.php';
 // Creating custom post type 'Unit'
 add_action( "init", "add_unit_post_type" );
 add_shortcode( 'unit_split_list', 'units_split_list' );
