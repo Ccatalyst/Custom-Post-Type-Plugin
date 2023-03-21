@@ -12,6 +12,7 @@ function build_unit_table( $array, $title ) {
 	$output .= '<th><strong> Area </strong></th>';
 	$output .= '<th><strong> Link </strong></th>';
 	$output .= '</tr>';
+
 	foreach ( $array as $unit ) {
 		$unit_number = $unit->post_title;
 		$asset_id = get_post_meta( $unit->ID, 'asset_id', true );
@@ -76,5 +77,4 @@ function units_split_list() {
 		$output .= build_unit_table( $one_area_units, 'Units with area equal to 1' );
 		return $output;
 	}
-
 }

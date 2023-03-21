@@ -10,11 +10,9 @@ Author: Matthew Todor
 /*
 WISHLIST: to be addressed once assessment requirements are met
 -Make Floor Plan ID column sortable
--Alter unit list page to be structured more like the category/tag pages, with the "create new" fields right on the page.
 -Look into and implement uninstall functions to clear data when the plugin is uninstalled.
 -Alter various names to be changed when viewed by non-english-language users.
 */
-
 
 include 'includes/functions.php';
 include 'includes/admin/admin-page.php';

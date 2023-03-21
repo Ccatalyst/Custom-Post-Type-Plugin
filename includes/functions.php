@@ -1,5 +1,4 @@
 <?php
-
 function call_sightmap_api() {
 	header( 'Access-Control-Allow-Origin:*' );
 	$api_url = '<API url>';
