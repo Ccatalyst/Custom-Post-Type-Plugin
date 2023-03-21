@@ -1,8 +1,8 @@
 <?php
 
 /*
-Plugin Name: Engrain Unit Display
-Description: A WordPress plugin that accesses the sightmap API to display location data in a formatted list
+Plugin Name: Unit Post Type Display
+Description: A WordPress plugin that accesses the a multi-family home API to display location data in a formatted list
 Version: 1.0
 Author: Matthew Todor
 */
